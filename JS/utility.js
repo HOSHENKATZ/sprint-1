@@ -1,9 +1,10 @@
 'use strict'
-var gBoard = buildBoard()
+var gBoard 
 var gLevel = {
     size: 4,
     mines: 2,
 }
+var gIs1STClick = false
 
 function buildBoard() {
 
@@ -27,19 +28,19 @@ function buildBoard() {
 
     }
 
-    board[1][1] = {
-        isShown: false,
-        isMine: true,
-        isMarked: true,
-        minesAroundCount: 0
-    }
-    board[0][3] = {
-        isShown: false,
-        isMine: true,
-        isMarked: true,
-        minesAroundCount: 0
-    }
-    return board
+    // board[1][1] = {
+    //     isShown: false,
+    //     isMine: true,
+    //     isMarked: true,
+    //     minesAroundCount: 0
+    // }
+    // board[0][3] = {
+    //     isShown: false,
+    //     isMine: true,
+    //     isMarked: true,
+    //     minesAroundCount: 0
+    // }
+     return board
 }
 
 function createMat(rows, cols) {
@@ -55,9 +56,11 @@ function createMat(rows, cols) {
 }
 
 function renderBoard(mat, selector) {
-    // for (var i = 0; i < gLevel.mines; i++) {
-    //     renderMines()
-    // }
+    if (gIs1STClick === true){ 
+        for (var i = 0; i < gLevel.mines; i++) {
+        renderMines()
+    }
+}
 
     var strHTML = '<table><tbody>'
     for (var i = 0; i < mat.length; i++) {
@@ -101,12 +104,12 @@ function renderMines() {
 }
 
 function renderCell(location, value) {
-    const cellSelector = '.' + getClassName(location)
-    // console.log(cellSelector)
-    const elCell = document.querySelector(cellSelector)
-    console.dir(elCell)
-    // console.log(elCell)
-     console.log(value)
+    var cellSelector = '.' + getClassName(location)
+    console.log(cellSelector)
+    var elCell = document.querySelector(cellSelector)
+    console.log(elCell)
+    console.log(value)
+     
     elCell.innerHTML = value
 
 }
@@ -154,7 +157,7 @@ function checknegs(cellI, cellJ) {
             if (currCell.isMine === true) {
 
                 NegsCount++
-                console.log(NegsCount)
+                
                 gBoard[cellI][cellJ].minesAroundCount = NegsCount
 
             }

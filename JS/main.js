@@ -6,12 +6,17 @@ var gGame = {
     markedCount: 0,
     secsPassed: 0
 }
-var gSafeCount 
+
 
 function onInit() {
+    gBoard = null
+    var modal = document.querySelector('.modal')
+    modal.style.display = "none"
+    gIs1STClick = false
     gGame.isOn = true
-    gSafeCount = (gLevel.size) * (gLevel.size) - gLevel.mines
+    gBoard = buildBoard()
     renderBoard(gBoard, '.tab-place')
+    gIs1STClick = true
     var elNewGameBtn = document.querySelector('.smiley-button')
     elNewGameBtn.innerHTML = '😃'
 
@@ -19,7 +24,7 @@ function onInit() {
 
 
 function onCellClicked(cell, cellI, cellJ) {
-    
+
     if (gGame.isOn === false || gBoard[cellI][cellJ].isMarked === true) {
         return
     }
@@ -30,6 +35,7 @@ function onCellClicked(cell, cellI, cellJ) {
         var elNewGameBtn = document.querySelector('.smiley-button')
         elNewGameBtn.innerHTML = '💀'
         var modal = document.querySelector('.modal')
+        modal.innerHTML = 'You lose!'
         modal.style.display = "block"
         return
     }
@@ -44,19 +50,24 @@ function onCellClicked(cell, cellI, cellJ) {
                 if (j < 0 || j >= gBoard[0].length) continue
                 if (i === cellI && j === cellJ) continue
 
-                if (gBoard[i][j].isMine === false) {
+                if (gBoard[i][j].isMine === false && gBoard[cellI][cellJ].isMarked === false) {
 
                     const currCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`)
                     currCell.classList.add('shown')
                     gBoard[i][j].isShown = true
-
-
+                    
+                    console.log(gIs1STClick)
+                    if (gIs1STClick === true) {
+                        renderBoard(gBoard, '.tab-place')
+                        gIs1STClick = false
+                    }
                 }
 
             }
         }
 
     }
+    gBoard[cellI][cellJ].isShown = true
     checkGameOver()
 
 }
@@ -69,35 +80,54 @@ function onCellMarked(cellI, cellJ) {
         const currCell = document.querySelector(`[data-i="${cellI}"][data-j="${cellJ}"]`)
         currCell.classList.add('marked')
         renderCell({ i: cellI, j: cellJ }, '🚩')
-    } else {
+        console.log('marked:', gBoard[cellI][cellJ])
+        return
+    }
+    if (gBoard[cellI][cellJ].isMine === false && gBoard[cellI][cellJ].isMarked === true) {
         gBoard[cellI][cellJ].isMarked = false
         const currCell = document.querySelector(`[data-i="${cellI}"][data-j="${cellJ}"]`)
         currCell.classList.remove('marked')
         var num = gBoard[cellI][cellJ].minesAroundCount
         renderCell({ i: cellI, j: cellJ }, num)
+        return
 
+    }
+    if (gBoard[cellI][cellJ].isMine === true && gBoard[cellI][cellJ].isMarked === true) {
+        gBoard[cellI][cellJ].isMarked = false
+        const currCell = document.querySelector(`[data-i="${cellI}"][data-j="${cellJ}"]`)
+        currCell.classList.remove('marked')
+        var num = gBoard[cellI][cellJ].minesAroundCount
+        renderCell({ i: cellI, j: cellJ }, '💣')
+        return
     }
 }
 
-// function checkGameOver() {
-//     var markedCount = 0
-    
+function checkGameOver() {
+    console.log(gBoard)
+    var safeCount = 14
 
-//     for (var i = 0; i < gBoard.length; i++) {
-//         for (var j = 0; j < gBoard[0].length; j++) {
-//             if (gBoard[i][j].isShown === true) {
-//                 gSafeCount--
-//                 console.log(gSafeCount)
-//             }
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[0].length; j++) {
 
-//         }
+            if (gBoard[i][j].isShown === true) {
+                safeCount--
+                console.log(safeCount, gBoard[i][j].isShown)
 
-//     }
+            }
 
-//     if (gSafeCount === 0) {
-//        gGame.isOn = false
-//        alert('you won')
-//     }
+        }
+
+    }
+
+    if (safeCount === 0) {
+        gGame.isOn = false
+        var modal = document.querySelector('.modal')
+        modal.innerHTML = 'You win!!!!'
+        modal.style.display = "block"
+        var elNewGameBtn = document.querySelector('.smiley-button')
+        elNewGameBtn.innerHTML = '😎'
+    }
 
 
-// }
+}
+// (gLevel.size) * (gLevel.size) - gLevel.mines
