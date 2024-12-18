@@ -70,13 +70,13 @@ function renderBoard(mat, selector) {
                 console.log(cell)
                 const className = `cell cell-${i}-${j} hidden`
 
-                strHTML += `<td class="${className}" data-i="${i}" data-j="${j}" onclick="onCellClicked(this,${i},${j})">${cell}</td>`
+                strHTML += `<td class="${className}" data-i="${i}" data-j="${j}" onclick="onCellClicked(this,${i},${j})" oncontextmenu="onCellMarked(${i},${j})">${cell}</td>`
 
             } else {
 
                 const className = `cell cell-${i}-${j} hidden`
 
-                strHTML += `<td class="${className}" data-i="${i}" data-j="${j}" onclick="onCellClicked(this,${i},${j})">💣</td>`
+                strHTML += `<td class="${className}" data-i="${i}" data-j="${j}" onclick="onCellClicked(this,${i},${j})" oncontextmenu="onCellMarked(${i},${j})">💣</td>`
 
             }
 
@@ -104,8 +104,9 @@ function renderCell(location, value) {
     const cellSelector = '.' + getClassName(location)
     // console.log(cellSelector)
     const elCell = document.querySelector(cellSelector)
+    console.dir(elCell)
     // console.log(elCell)
-    // console.log(value)
+     console.log(value)
     elCell.innerHTML = value
 
 }

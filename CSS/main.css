@@ -1,32 +1,74 @@
-table{
+body{
+    background-color: lightgrey;
+}
+h1 {
+    text-align: center;
+    font-size: 5rem;
+    color: darkgoldenrod;
+}
+
+div {
+    text-align: center;
+}
+
+.smiley-button {
+    margin-left: 48.5%;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background-color: rgb(106, 102, 102);
+    text-align: center;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.modal {
+    display: none;
+    margin: auto;
+    padding: 10px;
+    
+    width: 100px;
+    text-align: center;
+    background-color: rgb(16, 101, 186);
+}
+
+table {
     margin: 50px auto;
     background-color: gray;
 }
+
 .cell {
-    box-sizing: border-box; 
+    box-sizing: border-box;
     width: 40px;
     height: 40px;
-    border-top:4px solid rgb(187, 185, 185);
-    border-right:4px solid rgb(93, 93, 93); 
-    border-bottom:4px solid rgb(88, 88, 88);
-    border-left:4px solid rgb(181, 179, 179);
+    border-top: 4px solid rgb(187, 185, 185);
+    border-right: 4px solid rgb(93, 93, 93);
+    border-bottom: 4px solid rgb(88, 88, 88);
+    border-left: 4px solid rgb(181, 179, 179);
     border-radius: 3px;
     text-align: center;
 }
-.hidden{
+
+.hidden {
     font-size: 0px;
     color: gray;
-cursor: pointer;
+    cursor: pointer;
 }
 
-.shown{
+.shown {
     font-size: 16px;
-   color: black; 
-   border: 3px rgb(112, 112, 112) solid;
-   cursor: auto;
+    color: black;
+    border: 3px rgb(112, 112, 112) solid;
+    cursor: auto;
 }
 
-footer{
+.marked{
+    font-size: 16px;
+    color: gray;
+    cursor: pointer;
+}
+
+footer {
     margin-top: 600px;
     padding: auto;
     width: 100%;
