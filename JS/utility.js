@@ -16,7 +16,7 @@ function buildBoard() {
             board[i][j] = {
                 isShown: false,
                 isMine: false,
-                isMarked: true,
+                isMarked: false,
                 minesAroundCount: 0
 
             }
