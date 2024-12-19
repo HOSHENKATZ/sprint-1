@@ -8,11 +8,10 @@ var gGame = {
 }
 var gLives
 
-
 function onInit() {
     gBoard = null
     gLives = 3
-    var lives =document.querySelector('h2') 
+    var lives = document.querySelector('h2')
     lives.innerHTML = '3 ❤️'
     var modal = document.querySelector('.modal')
     modal.style.display = "none"
@@ -23,17 +22,21 @@ function onInit() {
     gIs1STClick = true
     var elNewGameBtn = document.querySelector('.smiley-button')
     elNewGameBtn.innerHTML = '😃'
+    var test = gLevel.size * gLevel.size - gLevel.mines 
+    
 
 }
 
 
 
 function onCellClicked(cell, cellI, cellJ) {
-
+    
     if (gGame.isOn === false || gBoard[cellI][cellJ].isMarked === true) {
         return
     }
+   
     cell.classList.add('shown')
+    
     if (gBoard[cellI][cellJ].isMine === true) {
         if (gLives > 0) {
             console.log('hey')
@@ -48,7 +51,7 @@ function onCellClicked(cell, cellI, cellJ) {
                 currCell.classList.remove('shown')
 
             }, 1000);
-            console.log(gLives)
+            
             return
         } else {
 
@@ -61,8 +64,14 @@ function onCellClicked(cell, cellI, cellJ) {
             return
         }
     }
-    if (gBoard[cellI][cellJ].minesAroundCount === 0) {
-
+   
+    
+         gBoard[cellI][cellJ].isShown = true
+         
+         if (gBoard[cellI][cellJ].minesAroundCount === 0) {
+            if (gIs1STClick === true){
+                renderBoard(gBoard,'.tab-place')
+            }
         for (var i = cellI - 1; i <= cellI + 1; i++) {
 
             if (i < 0 || i >= gBoard.length) continue
@@ -70,7 +79,7 @@ function onCellClicked(cell, cellI, cellJ) {
 
             for (var j = cellJ - 1; j <= cellJ + 1; j++) {
                 if (j < 0 || j >= gBoard[0].length) continue
-                if (i === cellI && j === cellJ) continue
+                
 
                 if (gBoard[i][j].isMine === false && gBoard[cellI][cellJ].isMarked === false) {
 
@@ -78,19 +87,17 @@ function onCellClicked(cell, cellI, cellJ) {
                     currCell.classList.add('shown')
                     gBoard[i][j].isShown = true
 
-                    console.log(gIs1STClick)
-                    if (gIs1STClick === true) {
-                        renderBoard(gBoard, '.tab-place')
-                        gIs1STClick = false
-                    }
+                   
+
+                    
                 }
 
             }
         }
 
     }
-
-    gBoard[cellI][cellJ].isShown = true
+   
+    
     checkGameOver()
 
 }
@@ -128,7 +135,7 @@ function onCellMarked(cellI, cellJ) {
 
 function checkGameOver() {
     console.log(gBoard)
-    var safeCount = 14
+    var safeCount = gLevel.size * gLevel.size - gLevel.mines 
 
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
@@ -154,4 +161,19 @@ function checkGameOver() {
 
 
 }
-// (gLevel.size) * (gLevel.size) - gLevel.mines
+
+function onEasy() {
+    gLevel.size = 4
+    gLevel.mines = 2
+    onInit()
+}
+function onMedium() {
+    gLevel.size = 8
+    gLevel.mines = 14
+    onInit()
+}
+function onHard() {
+    gLevel.size = 12
+    gLevel.mines = 32
+    onInit()
+}

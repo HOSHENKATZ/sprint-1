@@ -4,7 +4,7 @@ body{
 h1 {
     text-align: center;
     font-size: 5rem;
-    color: darkgoldenrod;
+    color: rgb(151, 124, 56);
 }
 
 div {
@@ -78,4 +78,20 @@ footer {
     height: 100px;
     text-align: center;
     font-size: 2.5rem;
+}
+.level-btn{
+    width: 70px;
+    height: 30px;
+    border-width: 7px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+.Easy{
+    border-color: rgb(170, 170, 91);
+}
+.Medium{
+    border-color: olive;
+}
+.Hard{
+    border-color: rgb(96, 96, 25);
 }

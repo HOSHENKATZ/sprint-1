@@ -1,5 +1,5 @@
 'use strict'
-var gBoard 
+var gBoard
 var gLevel = {
     size: 4,
     mines: 2,
@@ -8,7 +8,7 @@ var gIs1STClick = false
 
 function buildBoard() {
 
-    const board = createMat(4, 4)
+    const board = createMat(gLevel.size, gLevel.size)
 
 
     for (var i = 0; i < board.length; i++) {
@@ -40,7 +40,7 @@ function buildBoard() {
     //     isMarked: true,
     //     minesAroundCount: 0
     // }
-     return board
+    return board
 }
 
 function createMat(rows, cols) {
@@ -56,12 +56,14 @@ function createMat(rows, cols) {
 }
 
 function renderBoard(mat, selector) {
-    if (gIs1STClick === true){ 
+    if (gIs1STClick === true) {
         for (var i = 0; i < gLevel.mines; i++) {
-        renderMines()
+            renderMines()
+            
+        }
+        console.log(gBoard)
+        gIs1STClick = false
     }
-}
-
     var strHTML = '<table><tbody>'
     for (var i = 0; i < mat.length; i++) {
 
@@ -97,9 +99,9 @@ function renderBoard(mat, selector) {
 
 function renderMines() {
     var location = findEmptyPos()
-    gBoard[location.i][location.j].isMine = true
-
     console.log(location)
+    gBoard[location.i][location.j].isMine = true
+   
 
 }
 
@@ -109,7 +111,7 @@ function renderCell(location, value) {
     var elCell = document.querySelector(cellSelector)
     console.log(elCell)
     console.log(value)
-     
+
     elCell.innerHTML = value
 
 }
@@ -125,11 +127,12 @@ function findEmptyPos() {
     for (var i = 0; i < gBoard.length; i++) {
         for (var j = 0; j < gBoard[0].length; j++) {
 
-            // console.log('cell:', cell) 
+            if (gBoard[i][j].isMine === false && gBoard[i][j].isShown === false) {
+                var pos = { i: i, j: j }
 
-            var pos = { i: i, j: j }
+                emptyPoss.push(pos)
+            }
 
-            emptyPoss.push(pos)
 
         }
     }
@@ -143,7 +146,7 @@ function checknegs(cellI, cellJ) {
 
     var NegsCount = 0
     for (var i = cellI - 1; i <= cellI + 1; i++) {
-        
+
         if (i < 0 || i >= gBoard.length) continue
 
 
@@ -157,7 +160,7 @@ function checknegs(cellI, cellJ) {
             if (currCell.isMine === true) {
 
                 NegsCount++
-                
+
                 gBoard[cellI][cellJ].minesAroundCount = NegsCount
 
             }
