@@ -9,7 +9,7 @@ var gGame = {
 var gLives
 
 function onInit() {
-    
+
     gBoard = null
     gLives = 3
     var lives = document.querySelector('h2')
@@ -24,7 +24,7 @@ function onInit() {
     var elNewGameBtn = document.querySelector('.smiley-button')
     elNewGameBtn.innerHTML = '😃'
     var test = gLevel.size * gLevel.size - gLevel.mines
-gTimerInterval = startTimer()
+    startTimer()
 
 }
 
@@ -33,7 +33,7 @@ gTimerInterval = startTimer()
 function onCellClicked(cell, cellI, cellJ) {
 
     if (gGame.isOn === false || gBoard[cellI][cellJ].isMarked === true) {
-        
+
         return
     }
 

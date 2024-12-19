@@ -195,15 +195,16 @@ function getRandomColor() {
 }
 
 function startTimer() {
+    //  document.querySelector('.timer').innerHTML = '00 : 00'
     gStartTime = Date.now()
     clearInterval(gTimerInterval)
     gTimerInterval = setInterval(timerTick, 67)
 }
 
 function stopTimer() {
-    gStartTime = 0
+    
     clearInterval(gTimerInterval)
-    document.querySelector('.timer').innerHTML = '00 : 00'
+    
 }
 
 function timerTick() {
