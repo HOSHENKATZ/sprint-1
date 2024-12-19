@@ -6,10 +6,14 @@ var gGame = {
     markedCount: 0,
     secsPassed: 0
 }
+var gLives
 
 
 function onInit() {
     gBoard = null
+    gLives = 3
+    var lives =document.querySelector('h2') 
+    lives.innerHTML = '3 ❤️'
     var modal = document.querySelector('.modal')
     modal.style.display = "none"
     gIs1STClick = false
@@ -23,21 +27,39 @@ function onInit() {
 }
 
 
+
 function onCellClicked(cell, cellI, cellJ) {
 
     if (gGame.isOn === false || gBoard[cellI][cellJ].isMarked === true) {
         return
     }
     cell.classList.add('shown')
-
     if (gBoard[cellI][cellJ].isMine === true) {
-        gGame.isOn = false
-        var elNewGameBtn = document.querySelector('.smiley-button')
-        elNewGameBtn.innerHTML = '💀'
-        var modal = document.querySelector('.modal')
-        modal.innerHTML = 'You lose!'
-        modal.style.display = "block"
-        return
+        if (gLives > 0) {
+            console.log('hey')
+            gLives--
+            var lives = document.querySelector('h2')
+            lives.innerHTML = `${gLives} ❤️`
+            var elNewGameBtn = document.querySelector('.smiley-button')
+            elNewGameBtn.innerHTML = '😱'
+            const currCell = document.querySelector(`[data-i="${cellI}"][data-j="${cellJ}"]`)
+            gBoard[cellI][cellJ].isShown = false
+            setTimeout(() => {
+                currCell.classList.remove('shown')
+
+            }, 1000);
+            console.log(gLives)
+            return
+        } else {
+
+            gGame.isOn = false
+            var elNewGameBtn = document.querySelector('.smiley-button')
+            elNewGameBtn.innerHTML = '💀'
+            var modal = document.querySelector('.modal')
+            modal.innerHTML = 'You lose!'
+            modal.style.display = "block"
+            return
+        }
     }
     if (gBoard[cellI][cellJ].minesAroundCount === 0) {
 
@@ -55,7 +77,7 @@ function onCellClicked(cell, cellI, cellJ) {
                     const currCell = document.querySelector(`[data-i="${i}"][data-j="${j}"]`)
                     currCell.classList.add('shown')
                     gBoard[i][j].isShown = true
-                    
+
                     console.log(gIs1STClick)
                     if (gIs1STClick === true) {
                         renderBoard(gBoard, '.tab-place')
@@ -67,10 +89,12 @@ function onCellClicked(cell, cellI, cellJ) {
         }
 
     }
+
     gBoard[cellI][cellJ].isShown = true
     checkGameOver()
 
 }
+
 
 function onCellMarked(cellI, cellJ) {
 

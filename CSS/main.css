@@ -35,6 +35,7 @@ div {
 table {
     margin: 50px auto;
     background-color: gray;
+    border:10px rgb(43, 54, 26) solid
 }
 
 .cell {
@@ -67,7 +68,9 @@ table {
     color: gray;
     cursor: pointer;
 }
-
+h2{
+    text-align: center;
+}
 footer {
     margin-top: 600px;
     padding: auto;
