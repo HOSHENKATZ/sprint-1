@@ -7,7 +7,7 @@ var gGame = {
     secsPassed: 0
 }
 var gLives
-
+var isHint = false
 function onInit() {
 
     gBoard = null
@@ -34,6 +34,10 @@ function onCellClicked(cell, cellI, cellJ) {
 
     if (gGame.isOn === false || gBoard[cellI][cellJ].isMarked === true) {
 
+        return
+    }
+    if (isHint === true) {
+        hint(cellI, cellJ)
         return
     }
 
@@ -141,6 +145,32 @@ function onCellMarked(cellI, cellJ) {
         return
     }
 }
+
+// function playHint() {
+//     isHint = true
+//     console.log(isHint)
+// }
+// function hint(cellI, cellJ) {
+//     console.log(cellI, cellJ)
+//     for (var i = cellI - 1; i <= cellI + 1; i++) {
+
+//         if (i < 0 || i >= gBoard.length) continue
+
+
+//         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+//             if (j < 0 || j >= gBoard[0].length) continue
+//             if (i === cellI && j === cellJ) continue
+//             const currCell = document.querySelector(`[data-i="${cellI}"][data-j="${cellJ}"]`)
+
+//             currCell.classList.add('shown')
+//             console.log(i,j)
+//             setTimeout(() => {
+//                 currCell.classList.remove ('shown')
+//             }, 1000);
+//         }
+//     }
+//     isHint = false
+// }
 
 function checkGameOver() {
     console.log(gBoard)

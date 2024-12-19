@@ -51,7 +51,7 @@ div {
 table {
    
     margin: 50px auto;
-    background-color: gray;
+    background-color: rgb(139, 136, 136);
     border:10px rgb(43, 54, 26) solid;
     
 }
@@ -112,4 +112,11 @@ footer {
 }
 .Hard{
     border-color: rgb(96, 96, 25);
+}
+.hint{
+    display: none;
+    width: 70px;
+    height: 30px;
+    margin-bottom: 40px;
+    background-color: goldenrod;
 }
