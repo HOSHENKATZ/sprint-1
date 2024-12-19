@@ -5,6 +5,8 @@ var gLevel = {
     mines: 2,
 }
 var gIs1STClick = false
+var gStartTime
+var gTimerInterval
 
 function buildBoard() {
 
@@ -59,7 +61,7 @@ function renderBoard(mat, selector) {
     if (gIs1STClick === true) {
         for (var i = 0; i < gLevel.mines; i++) {
             renderMines()
-            
+
         }
         console.log(gBoard)
         gIs1STClick = false
@@ -101,7 +103,7 @@ function renderMines() {
     var location = findEmptyPos()
     console.log(location)
     gBoard[location.i][location.j].isMine = true
-   
+
 
 }
 
@@ -208,7 +210,7 @@ function timerTick() {
     var timePassed = Date.now() - gStartTime
     var millisecs = String(timePassed % 1000).padStart(3, '0')
     var secs = parseInt(timePassed / 1000)
-
+    gGame.secsPassed = timePassed
     var strToDisplay = `${secs} : ${millisecs}`
     document.querySelector('.timer').innerHTML = '' + strToDisplay
 }
